@@ -1,4 +1,4 @@
-package application;
+package Labels;
 
 import javax.swing.BorderFactory;
 import javax.swing.ImageIcon;
@@ -8,8 +8,6 @@ import javax.swing.border.Border;
 
 import java.awt.Color;
 import java.awt.Font;
-
-import application.MyFrame;
 
 
 public class Main {

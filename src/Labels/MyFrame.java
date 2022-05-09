@@ -1,4 +1,4 @@
-package application;
+package Labels;
 
 import javax.swing.*;
 import java.awt.*;
