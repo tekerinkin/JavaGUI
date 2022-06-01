@@ -32,15 +32,15 @@ class DrawCircle implements Runnable {
     @Override
     public void run() {
         while (true) {
-            int x = ranX.nextInt(MAX_X);
-            int y = ranY.nextInt(MAX_Y);
+            int x = ranX.nextInt(MAX_X-50);
+            int y = ranY.nextInt(MAX_Y-50);
             int i = r.nextInt(colors.size());
 
             g.setColor(colors.get(i));
             g.fillOval(x, y, 50, 50);
 
             try {
-                Thread.sleep(100);
+                Thread.sleep(500);
                 panel.repaint();
                 Thread.sleep(10);
             } catch (Exception e) {
@@ -59,7 +59,7 @@ public class AnimationForm implements ActionListener {
     JButton btnStop;
     JFrame frame;
 
-    public void AnimationForm() {
+    AnimationForm() {
         initComponents();
 
         g = panel.getGraphics();
@@ -87,6 +87,7 @@ public class AnimationForm implements ActionListener {
 
         panel = new JPanel();
         panel.setBounds(200, 300, 624, 600);
+        panel.setBackground(Color.white);
 
         frame.add(btnStart);
         frame.add(btnStop);
