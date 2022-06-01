@@ -23,13 +23,14 @@ public class MyFrame extends JFrame implements ActionListener {
 
     HashSet<String> valid_commands = new HashSet<String>(Arrays.asList("move", "add",
             "input", "change_color", "delete", "change_font",
-            "move_font", "paint", "start_animation"));
+            "move_font", "paint", "start_animation", "rotate"));
 
     MyFrame() {
         frame = new JFrame();
         frame.setLayout(null);
         frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
         frame.setSize(1024, 1024);
+        frame.setResizable(false);
 
         button = new JButton("Clean");
         button.setFocusable(false);
@@ -86,6 +87,7 @@ public class MyFrame extends JFrame implements ActionListener {
                         case "move_font" -> window.moveFont(Integer.parseInt(ops[1]),
                                 Integer.parseInt(ops[2]));
                         case "start_animation" -> startAnimation();
+                        case "rotate" -> rotate(Integer.parseInt(ops[1]));
                     }
                 } else {
                     textArea.append(textField.getText() + "\n");
@@ -102,6 +104,7 @@ public class MyFrame extends JFrame implements ActionListener {
                         case "move_font" -> window.moveFont(Integer.parseInt(ops[1]),
                                 Integer.parseInt(ops[2]));
                         case "start_animation" -> startAnimation();
+                        case "rotate" -> rotate(Integer.parseInt(ops[1]));
                     }
                 }
                 textField.setText(null);
@@ -130,5 +133,11 @@ public class MyFrame extends JFrame implements ActionListener {
         {
             aniForm = new AnimationForm();
         }
+    }
+
+    void rotate(int angle)
+    {
+        window.setAngle(angle);
+        window.repaint();
     }
 }

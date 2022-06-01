@@ -21,9 +21,10 @@ public class DragArea extends JPanel {
         imageCorner = new Point(0,0);
         ClickListner clickListner = new ClickListner();
         DragListner dragListner = new DragListner();
-
+        this.setBounds(100,100,imageWidth, imageHeight);
         this.addMouseListener(clickListner);
         this.addMouseMotionListener(dragListner);
+        this.setVisible(true);
     }
 
     public void paintComponent(Graphics g){

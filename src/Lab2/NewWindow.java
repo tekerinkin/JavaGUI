@@ -2,6 +2,7 @@ package Lab2;
 
 import javax.swing.*;
 import java.awt.*;
+import java.awt.geom.AffineTransform;
 
 public class NewWindow extends JFrame {
 
@@ -9,11 +10,13 @@ public class NewWindow extends JFrame {
     DragArea area;
     JLabel label;
     ImageIcon icon;
+    int angle;
 
     NewWindow() {
         this.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
         this.setLayout(null);
         this.setSize(1024, 1024);
+        this.setResizable(false);
 
 
         this.setVisible(true);
@@ -22,12 +25,12 @@ public class NewWindow extends JFrame {
 
     void addImage(String filename) {
         if (label == null) {
-            icon = new ImageIcon(filename + ".png");
-            label = new JLabel();
+            icon = new ImageIcon(filename);
+            label = new JLabel(icon);
             label.setBounds(0, 0, icon.getIconWidth(), icon.getIconHeight());
+            label.setVisible(true);
             this.add(label);
-
-            repaint();
+            this.revalidate();
         }
     }
 
@@ -91,6 +94,23 @@ public class NewWindow extends JFrame {
         area = new DragArea(filename + ".png");
         this.add(area);
         repaint();
+    }
+
+    public void paint(Graphics g){
+        if(label != null){
+            Graphics2D g2D = (Graphics2D) g;
+            AffineTransform at = g2D.getTransform();
+            at.rotate(Math.toRadians(angle), label.getX() + label.getWidth()/2,
+                    label.getY() + label.getHeight()/2);
+            g2D.setTransform(at);
+            g2D.drawImage(icon.getImage(), label.getX(), label.getY(), null);
+            super.paint(g);
+        }
+    }
+
+    void setAngle(int angle)
+    {
+        this.angle += angle;
     }
 
 }

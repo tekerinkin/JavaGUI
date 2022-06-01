@@ -32,8 +32,8 @@ class DrawCircle implements Runnable {
     @Override
     public void run() {
         while (true) {
-            int x = ranX.nextInt(MAX_X-50);
-            int y = ranY.nextInt(MAX_Y-50);
+            int x = ranX.nextInt(MAX_X-100);
+            int y = ranY.nextInt(MAX_Y-100);
             int i = r.nextInt(colors.size());
 
             g.setColor(colors.get(i));
@@ -42,7 +42,7 @@ class DrawCircle implements Runnable {
             try {
                 Thread.sleep(500);
                 panel.repaint();
-                Thread.sleep(10);
+                Thread.sleep(5);
             } catch (Exception e) {
                 System.err.println("" + e.getMessage());
             }
@@ -72,6 +72,7 @@ public class AnimationForm implements ActionListener {
         frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
         frame.setLayout(null);
         frame.setSize(1024, 1024);
+        frame.setResizable(false);
 
         btnStart = new JButton("Start");
         btnStart.setFocusable(false);
