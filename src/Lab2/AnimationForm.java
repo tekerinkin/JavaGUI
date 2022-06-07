@@ -4,9 +4,11 @@ import javax.swing.*;
 import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.awt.image.BufferedImage;
 import java.util.ArrayList;
 import java.util.Random;
 import java.util.Arrays;
+import java.awt.image.Raster;
 
 class DrawCircle implements Runnable {
     int MAX_X, MAX_Y;
@@ -48,6 +50,42 @@ class DrawCircle implements Runnable {
             }
         }
     }
+}
+
+class WalkingSoldier implements Runnable{
+    Graphics g;
+    JPanel panel;
+    ArrayList<ImageIcon> images = new ArrayList<ImageIcon>();
+
+    WalkingSoldier(JPanel panel){
+        super();
+        this.panel = panel;
+        g = panel.getGraphics();
+        for(int i = 1; i < 5; ++i){
+            images.add(new ImageIcon("../src/Студентам/Soldier/Walk/Walk" +
+                    i + ".png"));
+        }
+    }
+
+    @Override
+    public void run(){
+        int WIDTH = images.get(0).getIconWidth();
+        int X = 0;
+        int Y = panel.getY() + panel.getHeight()/2;
+        int i = 0;
+        while(true){
+            g.drawImage(images.get(i % 4).getImage(), 0, 0, null);
+            i++;
+            X+=10;
+            try{
+                panel.repaint();
+                Thread.sleep(10);
+            }catch(Exception e){
+                System.err.println("" + e.getMessage());
+            }
+        }
+    }
+
 }
 
 public class AnimationForm implements ActionListener {
@@ -99,7 +137,7 @@ public class AnimationForm implements ActionListener {
     @Override
     public void actionPerformed(ActionEvent e) {
         if (e.getSource() == btnStart) {
-            animationThread = new Thread(new DrawCircle(panel));
+            animationThread = new Thread(new WalkingSoldier(panel));
             animationThread.start();
         } else if (e.getSource() == btnStop) {
             animationThread.stop();

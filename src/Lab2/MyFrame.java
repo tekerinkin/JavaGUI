@@ -1,10 +1,15 @@
 package Lab2;
 
+import Lab2.PingPong.GameFrame;
+import Lab2.SnakeGame.SnakeGameFrame;
+import Lab2.TicTacToe.TicTacToe;
+
 import javax.swing.*;
 import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.util.Arrays;
+import java.util.Locale;
 import java.util.Objects;
 import java.util.HashSet;
 import java.io.File;
@@ -17,13 +22,15 @@ public class MyFrame extends JFrame implements ActionListener {
     JButton button1;
     JTextField textField;
     JTextArea textArea;
-    String commands = "";
     NewWindow window;
     AnimationForm aniForm;
+    GameFrame gameFrame;
+    SnakeGameFrame snakeGameFrame;
+    TicTacToe ticTacGame;
 
     HashSet<String> valid_commands = new HashSet<String>(Arrays.asList("move", "add",
             "input", "change_color", "delete", "change_font",
-            "move_font", "paint", "start_animation", "rotate"));
+            "move_font", "paint", "start_animation", "rotate", "start_game"));
 
     MyFrame() {
         frame = new JFrame();
@@ -73,45 +80,26 @@ public class MyFrame extends JFrame implements ActionListener {
                 textArea.append("Incorrect command\n");
                 textField.setText(null);
             } else {
-                if (window != null) {
                     textArea.append(textField.getText() + "\n");
                     switch (ops[0]) {
                         case "add" -> addSomething(ops[1], ops[2]);
-                        case "move" -> window.moveImage(Integer.parseInt(ops[1]),
+                        case "move" -> moveImage(Integer.parseInt(ops[1]),
                                 Integer.parseInt(ops[2]));
-                        case "change_color" -> window.changeColor(ops[1]);
-                        case "delete" -> window.deleteImage();
-                        case "input" -> window.input(ops[1]);
-                        case "change_font" -> window.setFont(ops[1],
+                        case "change_color" -> changeColor(ops[1]);
+                        case "delete" -> deleteImage();
+                        case "input" -> inputText(ops[1]);
+                        case "change_font" -> changeFont(ops[1],
                                 Integer.parseInt(ops[2]), Integer.parseInt(ops[3]));
-                        case "move_font" -> window.moveFont(Integer.parseInt(ops[1]),
+                        case "move_font" -> moveFont(Integer.parseInt(ops[1]),
                                 Integer.parseInt(ops[2]));
                         case "start_animation" -> startAnimation();
                         case "rotate" -> rotate(Integer.parseInt(ops[1]));
+                        case "start_game" -> startGame(ops[1]);
                     }
-                } else {
-                    textArea.append(textField.getText() + "\n");
-                    window = new NewWindow();
-                    switch (ops[0]) {
-                        case "add" -> addSomething(ops[1], ops[2]);
-                        case "move" -> window.moveImage(Integer.parseInt(ops[1]),
-                                Integer.parseInt(ops[2]));
-                        case "change_color" -> window.changeColor(ops[1]);
-                        case "delete" -> window.deleteImage();
-                        case "input" -> window.input(ops[1]);
-                        case "change_font" -> window.setFont(ops[1],
-                                Integer.parseInt(ops[2]), Integer.parseInt(ops[3]));
-                        case "move_font" -> window.moveFont(Integer.parseInt(ops[1]),
-                                Integer.parseInt(ops[2]));
-                        case "start_animation" -> startAnimation();
-                        case "rotate" -> rotate(Integer.parseInt(ops[1]));
-                    }
+                }
                 }
                 textField.setText(null);
             }
-
-        }
-    }
 
     public void addSomething(String item, String filename) {
         File image = new File(filename + ".png");
@@ -119,13 +107,46 @@ public class MyFrame extends JFrame implements ActionListener {
             if (Objects.equals(item, "image")) {
                 window.addImage(filename + ".png");
                 System.out.println("add image");
-            } else if (Objects.equals(item, "drag_image")) {
-                window.addDragImage(filename + ".png");
-                System.out.println("add drag_image");
             }
         } else {
             System.out.println("No such file");
         }
+    }
+
+    public void moveImage(int x, int y){
+        if(window == null)
+            window = new NewWindow();
+        window.moveImage(x, y);
+    }
+
+    public void changeColor(String color){
+        if(window == null)
+            window = new NewWindow();
+        window.changeColor(color);
+    }
+
+    public void deleteImage(){
+        if(window == null)
+            window = new NewWindow();
+        window.deleteImage();
+    }
+
+    public void inputText(String text){
+        if(window == null)
+            window = new NewWindow();
+        window.input(text);
+    }
+
+    public void changeFont(String name, int size, int smt){
+        if(window == null)
+            window = new NewWindow();
+        window.setFont(name, size, smt);
+    }
+
+    public void moveFont(int x, int y){
+        if(window == null)
+            window = new NewWindow();
+        window.moveFont(x, y);
     }
 
     public void startAnimation(){
@@ -139,5 +160,13 @@ public class MyFrame extends JFrame implements ActionListener {
     {
         window.setAngle(angle);
         window.repaint();
+    }
+
+    void startGame(String name){
+        switch (name.toLowerCase(Locale.ROOT)) {
+            case "ping" -> gameFrame = new GameFrame();
+            case "snake" -> snakeGameFrame = new SnakeGameFrame();
+            case "tictac" -> ticTacGame = new TicTacToe();
+        }
     }
 }

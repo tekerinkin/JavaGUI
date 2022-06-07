@@ -2,11 +2,11 @@ package Lab2.SnakeGame;
 
 import javax.swing.*;
 
-public class GameFrame extends JFrame{
+public class SnakeGameFrame extends JFrame{
 
     GamePanel panel;
 
-    GameFrame(){
+    public SnakeGameFrame(){
         panel = new GamePanel();
         this.add(panel);
         this.setTitle("Snake");
@@ -14,5 +14,6 @@ public class GameFrame extends JFrame{
         this.setResizable(false);
         this.pack();
         this.setLocationRelativeTo(null);
+        this.setVisible(true);
     }
 }

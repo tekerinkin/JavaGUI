@@ -7,7 +7,6 @@ import java.awt.geom.AffineTransform;
 public class NewWindow extends JFrame {
 
     JLabel textLabel;
-    DragArea area;
     JLabel label;
     ImageIcon icon;
     int angle;
@@ -87,12 +86,6 @@ public class NewWindow extends JFrame {
         textLabel.setBounds(x, y,
                 textLabel.getWidth(), textLabel.getHeight());
         textLabel.repaint();
-        repaint();
-    }
-
-    void addDragImage(String filename) {
-        area = new DragArea(filename + ".png");
-        this.add(area);
         repaint();
     }
 
