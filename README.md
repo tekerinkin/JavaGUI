@@ -4,3 +4,4 @@
 
 - Snake
 - PingPong
+- TicTacToe
